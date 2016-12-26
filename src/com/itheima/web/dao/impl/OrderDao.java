@@ -54,23 +54,25 @@ public class OrderDao implements IOrderDao {
 
 		QueryRunner qr = new QueryRunner();
 		String sql = "insert into orderitem values(?,?,?,?,?)";
-		qr.update(DataSourceUtils.getConnection(), sql, or.getItemId(), or.getCount(), or.getSubTotal(),
+		qr.update(DataSourceUtils.getConnection(), sql, or.getItemid(), or.getCount(), or.getSubTotal(),
 				or.getProduct().getPid(), or.getOrder().getOid());
 
 	}
 
-	public List<Order> findAllByPage(String uid)
+	public List<Order> findAllByPage(String uid,int  currPage,int pageSize)
 			throws IllegalAccessException, InvocationTargetException, SQLException {
 		List<Order> listOrder = new ArrayList<Order>();
-		String sql = "select * from orders where uid=?";
+		String sql = "select * from orders where uid=? limit ?,?";
 
 		QueryRunner qy = new QueryRunner(DataSourceUtils.getDataSource());
 
-		listOrder = qy.query(sql, new BeanListHandler<Order>(Order.class), uid);
+		listOrder = qy.query(sql, new BeanListHandler<Order>(Order.class), uid,(currPage-1)*pageSize,pageSize);
+		String sql3="select * from (select * from orderitem od where od.oid=?) as suborderitem,product pd where suborderitem.pid=pd.pid";
+		
 		String sqlOrIt = "select * from orderitem od, product pd where od.pid=od.pid and od.oid=?";
 		for (Order or : listOrder) {
 
-			List<Map<String, Object>> listMap = qy.query(sqlOrIt, new MapListHandler(), or.getOid());
+			List<Map<String, Object>> listMap = qy.query(sql3, new MapListHandler(), or.getOid());
 
 			for (Map<String, Object> map : listMap) {
 				Product product = new Product();
@@ -95,11 +97,13 @@ public class OrderDao implements IOrderDao {
 	public int getOrderCount(String uid) throws Exception {
 		// TODO Auto-generated method stub
 
-		QueryRunner qr = new QueryRunner();
+		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
 		String sql = "select count(*) from orders where uid=?";
 
 		Long cout = (Long) qr.query(sql, new ScalarHandler(), uid);
 		return cout.intValue();
 	}
+
+	
 
 }

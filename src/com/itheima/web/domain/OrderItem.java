@@ -4,7 +4,7 @@ package com.itheima.web.domain;
  * @author lenovo 订单项属于哪个订单，订单项中包含哪类商品
  */
 public class OrderItem {
-	private String itemId;
+	private String itemid;
 
 	private Integer count = 0;
 	private Double subTotal = 0.0;
@@ -15,12 +15,12 @@ public class OrderItem {
 
 	}
 
-	public String getItemId() {
-		return itemId;
+	public String getItemid() {
+		return itemid;
 	}
 
-	public void setItemId(String itemId) {
-		this.itemId = itemId;
+	public void setItemid(String itemid) {
+		this.itemid = itemid;
 	}
 
 	public Integer getCount() {

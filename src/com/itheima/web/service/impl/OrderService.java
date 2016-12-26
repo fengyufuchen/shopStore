@@ -58,7 +58,7 @@ public class OrderService implements IOrderService {
 		// 还需要查询出每一个订单对应的订单项 select * from orderitem or,product pd where
 		// or.pid=product.pid and or.oid=?
 
-		return new PageBean<Order>(pageSize, orderDao.findAllByPage(uid), currPage, orderDao.getOrderCount(uid));
+		return new PageBean<Order>(pageSize, orderDao.findAllByPage(uid,currPage,pageSize), currPage, orderDao.getOrderCount(uid));
 	}
 
 }

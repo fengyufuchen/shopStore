@@ -3,6 +3,12 @@ package com.itheima.web.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author lenovo
+ *
+ *         分页查询的时候实际上是做了两次查询，第一次sql查询是是查询出指定数量的Bean，使用了limit语句； 然后第二次查询是查询总的数量，
+ * @param <T>
+ */
 public class PageBean<T> {
 
 	private Integer pageSize;// 每页显示的记录的 条数

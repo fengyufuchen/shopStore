@@ -89,7 +89,7 @@ public class MailUtils {
 		message.setContent(emailMsg, "text/html;charset=utf-8");
 
 		Transport transport = session.getTransport();
-		transport.connect("smtp.qq.com", "402948352@qq.com", "sxzxentbluqrbiih");
+		transport.connect("smtp.qq.com", "402948352@qq.com", "第三方验证登陆码");
 		transport.sendMessage(message, new Address[] { new InternetAddress(email) });
 
 		transport.close();

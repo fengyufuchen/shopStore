@@ -2,6 +2,7 @@ package com.itheima.web.servlet;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map.Entry;
 
 import javax.servlet.ServletException;
@@ -57,7 +58,7 @@ public class OrderServlet extends BaseServlet {
 
 			for (Entry<String, CartItem> entry : cart.getCartMap().entrySet()) {
 				OrderItem orderItem = new OrderItem();
-				orderItem.setItemId(UUIDUtils.getId());
+				orderItem.setItemid(UUIDUtils.getId());
 				orderItem.setCount(entry.getValue().getCount());
 				orderItem.setProduct(entry.getValue().getProduct());
 				orderItem.setSubTotal(entry.getValue().getSubtotal());
@@ -93,37 +94,46 @@ public class OrderServlet extends BaseServlet {
 
 	}
 
-	public PageBean findAllByPage(HttpServletRequest request, HttpServletResponse response) {
+	public void findAllByPage(HttpServletRequest request, HttpServletResponse response) {
 		// 判断用户是否已经登陆
 
 		User user = (User) request.getSession().getAttribute("user");
-		if (user != null)
-			;
-		String uid = user.getUid();
+		if (user != null) {
 
-		// 获取当前页面，固定pageSize
-		int currPage = Integer.valueOf(request.getParameter("currPage"));
+			String uid = user.getUid();
 
-		PageBean<Order> pageBean = new PageBean<>();
-		try {
-			pageBean = orderService.findAllByPage(uid, currPage, 4);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// 获取当前页面，固定pageSize
+			int currPage = Integer.valueOf(request.getParameter("currPage"));
+
+			PageBean<Order> pageBean = new PageBean<>();
+			try {
+				pageBean = orderService.findAllByPage(uid, currPage, 4);
+				System.out.println(pageBean.getList());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			// 根据用户查询所有的订单，返回值为PageBean
+
+			request.setAttribute("pageBean", pageBean);
+
+			// 放入到request中，请求转发到orderList页面
+			try {
+				request.getRequestDispatcher("/jsp/order_list.jsp").forward(request, response);
+			} catch (ServletException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else{
+			
+			try {
+				response.sendRedirect(request.getContextPath()+"/jsp/login.jsp");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-		// 根据用户查询所有的订单，返回值为PageBean
-
-		request.setAttribute("pageBean", pageBean);
-
-		// 放入到request中，请求转发到orderList页面
-		try {
-			request.getRequestDispatcher("/jsp/order_list.jsp").forward(request, response);
-		} catch (ServletException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return null;
+		
 
 	}
 

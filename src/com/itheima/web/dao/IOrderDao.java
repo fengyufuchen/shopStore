@@ -16,8 +16,8 @@ public interface IOrderDao {
 	 */
 	void addOrderItem(OrderItem or) throws Exception;
 
-	public List<Order> findAllByPage(String uid) throws Exception;
+	public List<Order> findAllByPage(String uid,int  currPage,int pageSize) throws Exception;
 
-	public int getOrderCount(String uid) throws Exception;
+	int getOrderCount(String uid) throws Exception;
 
 }
