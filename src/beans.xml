@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans>
+	<bean id="CategoryService" class="com.itheima.web.service.impl.CategoryService"></bean>
+	<bean id="ProductService" class="com.itheima.web.service.impl.ProductService"></bean>
+	<bean id="UserService" class="com.itheima.web.service.impl.UserService"></bean>
+	<bean id="OrderService" class="com.itheima.web.service.impl.OrderService"></bean>
+	
+
+   <bean id="ProductDao" class="com.itheima.web.dao.impl.ProductDao"/>
+   <bean id="UserDao" class="com.itheima.web.dao.impl.UserDao"/>
+   <bean id="CategoryDao" class="com.itheima.web.dao.impl.CategoryDao"/>
+   <bean id="OrderDao" class="com.itheima.web.dao.impl.OrderDao"/>
+</beans>

@@ -1,0 +1,27 @@
+1,浏览记录
+ 步骤分析：使用cookie 
+ 进入一个商品详情也米娜的时候需要记录当前的商品id
+ <a href="/store/product?method=getById&pid=xxx">
+ 需要在getByid方法中处理cookie
+ 规定cookie的名称是ids value:2-1-3
+ 1，获取指定的cookie
+ request.getCookies()  cookieUtils.getCookieByName(),根据cookie的名称 获取指定的cookie
+ 2 判断cookie是否为null，如果不为空，那么就获取value值，继续判断value中有没有商品的id，将字符串切割，然后转为list集合，
+ 如果有字符串，那么就移除list。remove，然后将商品的id放置到list的最前面，
+ 如果没有的话 继续判断list的长度是否大于等于3，如果大于等于3 ，移除最后一个将当前的商品id添加到最前端，如果小于3直接将当前商品的id放到最前面
+ 
+ 最后将list转为字符串
+ 
+ 
+ 如果value为空，那么就将当前商品的id放入ids中
+ 
+ 
+ cookie cookie=new cookie("ids",ids)
+ cookie.setMaxAge()
+ cookie.setPath(request.getContextPath()+"/")
+ respone.addCookie(cookie)
+ 
+ 在product_list.jsp中将cookie中 的商品战术出来，
+ （1）需要在jsp页面中先获取指定的cookie
+   （2） 判断是否为空，如果不为空，获取value value:1-3-2,
+   截取切割字符串获取每一个商品的id，通过id查询商品获取商品的所以信息

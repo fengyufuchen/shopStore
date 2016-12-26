@@ -1,0 +1,24 @@
+* {
+	margin: 0px;
+	padding: 0px;
+	text-decoration: none;
+	list-style: none;
+}
+
+#cotainerBody {
+	outline: 2px solid green;
+}
+
+#nav-guide {
+	height: 100%;
+}
+
+#nav-guide ol {
+	margin: 20px 0px;
+}
+
+#nav-guide ol li {
+	display: inline-block;
+	margin-left: 7px;
+	cursor: pointer;
+}
