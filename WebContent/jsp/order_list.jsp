@@ -9,6 +9,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
+<style type="text/css">
+body {
+	margin: 0px;
+	padding: 0px;
+	list-style: none;
+	text-align: left;
+	vertical-align: center;
+}
+</style>
 <body>
 	<%@include file="/jsp/navheader.jsp"%>
 
@@ -20,28 +29,43 @@
 					<div>订单详情</div>
 				</div>
 				<table class="table table-bordered">
+					<c:forEach items="${pageBean.list }" var="order">
+						<tbody>
 
-					<tbody>
-						<tr class="warning">
+							<tr class="success">
+								<th colspan="1">订单编号:${order.oid }</th>
+								
+								<th colspan="1">订单时间：${order.orderTime }</th>
+							
+								<c:if test="${order.state==0}">
+									<th><a href="${pageContext.request.contextPath }/Order?method=findOrderById&oid=${order.oid}">付款</a></th>
+								</c:if>
+								<c:if test="${order.state==1}">
+									<th><a href="javascript:void(0)">已付款</a></th>
+								</c:if>
+								<c:if test="${order.state==2 }">
+									<a href="">确认收货</a>
+								</c:if>
+								<c:if test="${order.state==3 }">
+									<a hrf="">已完成</a>
+								</c:if>
+								<th>总金额：￥ ${order.total }</th>
+								<th></th>
+							</tr>
 
-							<th>图片</th>
-							<th>商品</th>
-							<th>价格</th>
-							<th>数量</th>
-							<th>小计</th>
-
-						</tr>
-
-
-
-						<c:forEach items="${pageBean.list }" var="order">
 							<tr class="warning">
-								<td colspan="1">订单编号:</td>
-								<td>${order.oid }</td>
-								<td colspan="1">订单时间：</td>
-								<td>${order.orderTime }</td>
+
+								<th>图片</th>
+								<th>商品</th>
+								<th>价格</th>
+								<th>数量</th>
+								<th>小计</th>
 
 							</tr>
+
+
+
+
 							<c:forEach items="${order.listOrderItem}" var="orderItem">
 
 
@@ -60,12 +84,12 @@
 
 							</c:forEach>
 
-						</c:forEach>
 
 
-					</tbody>
 
+						</tbody>
 
+					</c:forEach>
 				</table>
 			</div>
 			<!-- end panel -->
@@ -74,23 +98,21 @@
 					<ul class="pagination">
 
 						<c:if test="${pageBean.currPage==1 }">
-							<li><a
-								href="${pageContext.request.contextPath}/Order?method=findAllByPage&currPage=${pageBean.currPage-1}"
-								class="disabled">&laquo;</a></li>
+							<li class="disabled"><a
+								href="${pageContext.request.contextPath}/Order?method=findAllByPage&currPage=${pageBean.currPage-1}">&laquo;</a></li>
 
 						</c:if>
 						<c:if test="${pageBean.currPage>1 }">
 							<li><a
-								href="${pageContext.request.contextPath }/Order?method=findAllByPage&currPage=${pageBean.currPage-1">&laquo;</a></li>
+								href="${pageContext.request.contextPath }/Order?method=findAllByPage&currPage=${pageBean.currPage-1}">&laquo;</a></li>
 						</c:if>
 						<c:forEach begin="${pageBean.currPage>5?pageBean.currPage-5:1 }"
 							end="${pageBean.currPage+4>pageBean.totalPage?pageBean.totalPage:pageBean.currPage+4 }"
 							var="pageNum">
 							<c:if test="${pageBean.currPage==pageNum }">
 
-								<li><a
-									href="${pageContext.request.contextPath }/Order?method=findAllByPage&currPage=${pageNum}"
-									class="active">${pageNum }</a></li>
+								<li class="active"><a
+									href="${pageContext.request.contextPath }/Order?method=findAllByPage&currPage=${pageNum}">${pageNum }</a></li>
 							</c:if>
 							<c:if test="${pageBean.currPage!=pageNum }">
 
@@ -98,20 +120,16 @@
 									href="${pageContext.request.contextPath }/Order?method=findAllByPage&currPage=${pageNum}">${pageNum }</a></li>
 							</c:if>
 
-
 						</c:forEach>
-						<c:if test="${pageBean.totalPage==pageNum }">
-
-							<li><a
-								href="${pageContext.request.contextPath }/Order?method=findAllByPage&currPage=${pageBean.totalPage}"
-								class="disabled">&raquo;</a></li>
+						<c:if test="${pageBean.totalPage==pageBean.currPage }">
+							<li class="disabled"><a
+								href="${pageContext.request.contextPath }/Order?method=findAllByPage&currPage=${pageBean.totalPage}">&raquo;</a></li>
 						</c:if>
 
-						<c:if test="${pageBean.totalPage!=pageNum }">
+						<c:if test="${pageBean.totalPage!=pageBean.currPage }">
 
 							<li><a
-								href="${pageContext.request.contextPath }/Order?method=findAllByPage&currPage=${pageNum+1}"
-								class="disabled">&raquo;</a></li>
+								href="${pageContext.request.contextPath }/Order?method=findAllByPage&currPage=${pageBean.currPage+1}">&raquo;</a></li>
 						</c:if>
 
 					</ul>
@@ -140,6 +158,33 @@
 			</div>
 
 		</c:if>
+	</div>
+
+
+
+
+	<!-- end container -->
+	<div class="container-fluid">
+		<div style="margin-top: 50px;">
+			<img src="${pageContext.request.contextPath}/img/footer.jpg"
+				width="100%" height="78" alt="我们的优势" title="我们的优势" />
+		</div>
+
+		<div style="text-align: center; margin-top: 5px;">
+			<ul class="list-inline">
+				<li><a href="info.html">关于我们</a></li>
+				<li><a>联系我们</a></li>
+				<li><a>招贤纳士</a></li>
+				<li><a>法律声明</a></li>
+				<li><a>友情链接</a></li>
+				<li><a>支付方式</a></li>
+				<li><a>配送方式</a></li>
+				<li><a>服务声明</a></li>
+				<li><a>广告声明</a></li>
+			</ul>
+		</div>
+		<div style="text-align: center; margin-top: 5px; margin-bottom: 20px;">
+			Copyright &copy; 2005-2016 传智商城 版权所有</div>
 	</div>
 
 </body>

@@ -1,8 +1,17 @@
 package com.itheima.web.utils;
 
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
+import org.omg.CORBA.SystemException;
+import org.omg.CORBA.portable.InputStream;
+import org.omg.CORBA.portable.InvokeHandler;
+import org.omg.CORBA.portable.OutputStream;
+import org.omg.CORBA.portable.ResponseHandler;
 
 public class BeanFactory {
 
@@ -16,7 +25,26 @@ public class BeanFactory {
 			Element ele = (Element) doc.selectSingleNode("//bean[@id='" + id + "']");
 
 			String value = ele.attributeValue("class");
-			return Class.forName(value).newInstance();
+			//return Class.forName(value).newInstance();
+			
+			
+			final Object object=Class.forName(value).newInstance();//原来的对象，该对象需要被代理
+			
+			Object obj=Proxy.newProxyInstance(Class.forName(value).getClassLoader(), object.getClass().getInterfaces(),new InvocationHandler() {
+				
+				@Override
+				public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+					// TODO Auto-generated method stub
+					
+					if(method.getName().contains("add")){
+						System.out.println("拦截add方法");
+						return method.invoke(object, args);
+					}
+					return method.invoke(object, args);
+				}
+			});
+			return obj;
+			
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

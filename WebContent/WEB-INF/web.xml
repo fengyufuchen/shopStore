@@ -142,4 +142,44 @@
     <servlet-name>OrderServlet</servlet-name>
     <url-pattern>/Order</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AdminCategoryServlet</display-name>
+    <servlet-name>AdminCategoryServlet</servlet-name>
+    <servlet-class>com.itheima.web.servlet.AdminCategoryServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminCategoryServlet</servlet-name>
+    <url-pattern>/adminCategory</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AdminIndexServlet</display-name>
+    <servlet-name>AdminIndexServlet</servlet-name>
+    <servlet-class>com.itheima.web.servlet.AdminIndexServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminIndexServlet</servlet-name>
+    <url-pattern>/admin</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AdminProductSerlvet</display-name>
+    <servlet-name>AdminProductSerlvet</servlet-name>
+    <servlet-class>com.itheima.web.servlet.AdminProductSerlvet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminProductSerlvet</servlet-name>
+    <url-pattern>/adminProduct</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SendAjaxServlet</display-name>
+    <servlet-name>SendAjaxServlet</servlet-name>
+    <servlet-class>com.test.SendAjaxServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SendAjaxServlet</servlet-name>
+    <url-pattern>/sendajax</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -12,7 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
 import org.apache.commons.fileupload.DiskFileUpload;
-import org.apache.tomcat.util.http.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItem;
+
 
 
 
@@ -31,7 +32,7 @@ public class UploadRequestWrapper extends HttpServletRequestWrapper {
 	public UploadRequestWrapper(HttpServletRequest request) {
 		super(request);
 		// TODO Auto-generated constructor stub
-		mutipart = request.getHeader(MULTIPART_HEADER) != null
+		/*mutipart = request.getHeader(MULTIPART_HEADER) != null
 				&& request.getHeader(MULTIPART_HEADER).startsWith("multipart/form-data");
 		if (mutipart) {
 			@SuppressWarnings("deprecation")
@@ -67,7 +68,7 @@ public class UploadRequestWrapper extends HttpServletRequestWrapper {
 			}
 			//
 		}
-
+*/
 	}
 	
 	@Override

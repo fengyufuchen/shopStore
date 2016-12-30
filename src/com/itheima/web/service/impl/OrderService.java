@@ -1,21 +1,10 @@
 package com.itheima.web.service.impl;
 
-import java.lang.reflect.InvocationTargetException;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.dbutils.QueryRunner;
-import org.apache.commons.dbutils.handlers.BeanListHandler;
-import org.apache.commons.dbutils.handlers.MapListHandler;
 
 import com.itheima.web.dao.IOrderDao;
 import com.itheima.web.domain.Order;
 import com.itheima.web.domain.OrderItem;
 import com.itheima.web.domain.PageBean;
-import com.itheima.web.domain.Product;
 import com.itheima.web.service.IOrderService;
 import com.itheima.web.utils.BeanFactory;
 import com.itheima.web.utils.DataSourceUtils;
@@ -61,4 +50,17 @@ public class OrderService implements IOrderService {
 		return new PageBean<Order>(pageSize, orderDao.findAllByPage(uid,currPage,pageSize), currPage, orderDao.getOrderCount(uid));
 	}
 
+	@Override
+	public Order findOrderById(String oid) throws Exception {
+		// TODO Auto-generated method stub
+		
+		return orderDao.findOrderById(oid);
+		
+	}
+
+	@Override
+	public void update(Order order) throws Exception {
+		IOrderDao od=(IOrderDao) BeanFactory.getBean("OrderDao");
+		od.update(order);
+	}
 }

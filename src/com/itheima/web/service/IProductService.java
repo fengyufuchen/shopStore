@@ -15,4 +15,8 @@ public interface IProductService {
 
 	PageBean<Product> findByPage(String cid, String currentPage, int pageSize) throws Exception;
 
+	List<Product> findAllProduct() throws Exception;
+
+	void addProduct(Product product) throws Exception;
+
 }

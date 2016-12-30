@@ -20,4 +20,7 @@ public interface IOrderDao {
 
 	int getOrderCount(String uid) throws Exception;
 
+	Order findOrderById(String oid)throws Exception;
+	public void update(Order order) throws Exception;
+
 }

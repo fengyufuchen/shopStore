@@ -14,7 +14,7 @@ public class Order {
 	private String address;
 	private String name;
 
-	private String telephon;
+	private String telephone;
 	private List<OrderItem> listOrderItem = new ArrayList<>();
 
 	public Order() {
@@ -82,12 +82,14 @@ public class Order {
 		this.name = name;
 	}
 
-	public String getTelephon() {
-		return telephon;
+
+
+	public String getTelephone() {
+		return telephone;
 	}
 
-	public void setTelephon(String telephon) {
-		this.telephon = telephon;
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
 	}
 
 	public List<OrderItem> getListOrderItem() {

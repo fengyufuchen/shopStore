@@ -59,4 +59,16 @@ public class ProductService implements IProductService {
 		return pageBean;
 	}
 
+	@Override
+	public List<Product> findAllProduct() throws Exception {
+		// TODO Auto-generated method stub
+		return productDao.findAllProduct();
+	}
+
+	@Override
+	public void addProduct(Product product) throws Exception {
+		// TODO Auto-generated method stub
+		productDao.addProduct(product);
+	}
+
 }

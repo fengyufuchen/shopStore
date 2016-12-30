@@ -8,8 +8,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="${pageContext.request.contextPath }/FormTestServlet?action=post"
-		method="post">
+	<form
+		action="${pageContext.request.contextPath }/FormTestServlet?action=post"
+		method="get">
 		<div class="form-group">
 			<lable for="username" class="col-md-2 control-label"></lable>
 			<div class="col-md-4">

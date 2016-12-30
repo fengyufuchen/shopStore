@@ -25,9 +25,7 @@ public class AjaxForward extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		String paramvalue=request.getParameter("testData");
-
-		System.out.println(paramvalue);
+		
 		//request.getRequestDispatcher("/test/ajaxforwardSecond.jsp").forward(request, response);;
 		
 		response.sendRedirect(request.getServletContext().getContextPath()+"/test/ajaxforwardSecond.jsp");

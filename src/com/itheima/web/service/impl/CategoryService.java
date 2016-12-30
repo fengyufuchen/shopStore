@@ -44,7 +44,7 @@ public class CategoryService implements ICategoryService {
 			// 直接返回就可以
 			list = (List<Category>) element.getObjectValue();
 			System.out.println("直接从缓存中读取缓存数据");
-			
+
 		}
 
 		return list;
@@ -53,6 +53,51 @@ public class CategoryService implements ICategoryService {
 	public static void main(String[] args) {
 		CategoryService.class.getClassLoader().getResourceAsStream("ehcache.xml");
 		System.out.println(CategoryService.class.getClassLoader().getResourceAsStream("ehcache.xml"));
+	}
+
+	public List<Category>findAllLasted()throws Exception{
+	  
+	  return   categoryDao.findAllCategory();
+  }
+
+	public void addCategory(String categoryName) throws Exception {
+		categoryDao.addCategory(categoryName);
+		CacheManager cm=CacheManager.create(CategoryService.class.getClassLoader().getResourceAsStream("ehcache.xml"));
+		Cache cache=cm.getCache("categoryCache");
+		cache.remove("cList");
+		
+
+	}
+
+	public void updateCategory(String cid, String cname) throws Exception  {
+		// TODO Auto-generated method stub
+		
+		categoryDao.updateCategory(cid,cname);
+		CacheManager manager=CacheManager.create(CategoryService.class.getClassLoader().getResourceAsStream("ehcache.xml"));
+		Cache cache=manager.getCache("categoryCache");
+		cache.remove("cList");
+	}
+
+	public void deleteCategory(String cid)  throws Exception{
+		// TODO Auto-generated method stub
+		categoryDao.deleteCategory(cid);
+		CacheManager manager=CacheManager.create(CategoryService.class.getClassLoader().getResourceAsStream("ehcache.xml"));
+		Cache cache =manager.getCache("categoryCache");
+		cache.remove("cList");
+		
+	}
+
+	@Override
+	public Category findCategoryByCid(String cid) throws Exception {
+		// TODO Auto-generated method stub
+		List<Category> listCategory=findAll();
+		for(Category cg:listCategory){
+			if(cg.getCid().equals(cid)){
+				return cg;
+			}
+		}
+		return null;
+		
 	}
 
 }

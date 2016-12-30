@@ -1,5 +1,6 @@
 package com.itheima.web.dao.impl;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.apache.commons.dbutils.QueryRunner;
@@ -63,6 +64,25 @@ public class ProductDao implements IProductDao {
 		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
 		return ((Long) qr.query(sql, new ScalarHandler(), cid)).intValue();
 
+	}
+
+	@Override
+	public List<Product> findAllProduct() throws Exception {
+		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
+		String sql = "select * from product ";
+
+		return qr.query(sql, new BeanListHandler<Product>(Product.class));
+	}
+
+	@Override
+	public void addProduct(Product product) throws Exception {
+		// TODO Auto-generated method stub
+
+		String sql = "insert into product values(?,?,?,?,?,?,?,?,?,?) ";
+		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
+		qr.update(sql, product.getPid(), product.getPname(), product.getMarket_price(), product.getShop_price(),
+				product.getPimage(), new Date(product.getPdate().getTime()), product.getIs_hot(), product.getPdesc(),
+				product.getPflag(), product.getCategory().getCid());
 	}
 
 }

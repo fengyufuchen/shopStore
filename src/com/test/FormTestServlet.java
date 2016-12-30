@@ -27,9 +27,13 @@ public class FormTestServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-
+		
+		/*FileItem item= (FileItem) iterator.next();  
+		String all = new String(item.getString().getBytes("iso-8859-1"), "utf-8");
+		String allvalue = item.getFieldName(); */
 		System.out.println(request.getParameter("action"));
 		System.out.println(request.getParameter("email"));
+		System.out.println(request.getParameter("username"));
 		System.out.println(request.getParameter("password"));
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}

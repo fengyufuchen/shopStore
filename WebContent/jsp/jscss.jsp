@@ -20,6 +20,10 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath }/css/bootstrap-datetimepicker.css">
 
+<link href="${pageContext.request.contextPath }/css/bootstrap-select.min.css" rel="stylesheet" media="screen" />
+
+
+
 
 <!-- Favicon and touch icons -->
 <link rel="shortcut icon" href="assets/ico/favicon.png">
@@ -38,7 +42,8 @@
 <script type="text/javascript"
 	src="${pageContext.request.contextPath }/js/bootstrap-datetimepicker.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+
+<script type="text/javascript" src="${pageContext.request.contextPath }/js/bootstrap-select/bootstrap-select.min.js"></script>
 </head>
 <body>
 

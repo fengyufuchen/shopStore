@@ -9,4 +9,7 @@ public interface IOrderService {
 
 	PageBean findAllByPage(String uid, int currPage, int i) throws Exception;
 
+	Order findOrderById(String oid) throws Exception;
+	public void update(Order order) throws Exception ;
+
 }

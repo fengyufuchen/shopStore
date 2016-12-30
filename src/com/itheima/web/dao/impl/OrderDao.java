@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
@@ -34,7 +35,7 @@ public class OrderDao implements IOrderDao {
 		 */
 		String sql = "insert into orders  values(?,?,?,?,?,?,?,?)";
 		qr.update(DataSourceUtils.getConnection(), sql, order.getOid(), order.getOrderTime(), order.getTotal(),
-				order.getState(), order.getAddress(), order.getName(), order.getTelephon(), order.getUser().getUid());
+				order.getState(), order.getAddress(), order.getName(), order.getTelephone(), order.getUser().getUid());
 
 	}
 
@@ -59,16 +60,16 @@ public class OrderDao implements IOrderDao {
 
 	}
 
-	public List<Order> findAllByPage(String uid,int  currPage,int pageSize)
+	public List<Order> findAllByPage(String uid, int currPage, int pageSize)
 			throws IllegalAccessException, InvocationTargetException, SQLException {
 		List<Order> listOrder = new ArrayList<Order>();
 		String sql = "select * from orders where uid=? limit ?,?";
 
 		QueryRunner qy = new QueryRunner(DataSourceUtils.getDataSource());
 
-		listOrder = qy.query(sql, new BeanListHandler<Order>(Order.class), uid,(currPage-1)*pageSize,pageSize);
-		String sql3="select * from (select * from orderitem od where od.oid=?) as suborderitem,product pd where suborderitem.pid=pd.pid";
-		
+		listOrder = qy.query(sql, new BeanListHandler<Order>(Order.class), uid, (currPage - 1) * pageSize, pageSize);
+		String sql3 = "select * from (select * from orderitem od where od.oid=?) as suborderitem,product pd where suborderitem.pid=pd.pid";
+
 		String sqlOrIt = "select * from orderitem od, product pd where od.pid=od.pid and od.oid=?";
 		for (Order or : listOrder) {
 
@@ -104,6 +105,61 @@ public class OrderDao implements IOrderDao {
 		return cout.intValue();
 	}
 
-	
+	@Override
+	public Order findOrderById(String oid) {
+		// TODO Auto-generated method stub
+		String sql1 = "select * from orders where  orders.oid=?";
+
+		String sql = "select * from (select * from orderitem od where od.oid=?) as suborderitem,product pd where suborderitem.pid=pd.pid";
+
+		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
+		Order order = null;
+		try {
+			order = qr.query(sql1, new BeanHandler<Order>(Order.class), oid);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		if (order != null) {
+			try {
+				List<Map<String, Object>> listMap = qr.query(sql, new MapListHandler(), oid);
+				for (Map<String, Object> map : listMap) {
+					Product product = new Product();
+
+					BeanUtils.populate(product, map);
+
+					OrderItem orderItem = new OrderItem();
+					BeanUtils.populate(orderItem, map);
+					orderItem.setProduct(product);
+
+					order.getListOrderItem().add(orderItem);
+
+				}
+				return order;
+
+			} catch (SQLException | IllegalAccessException | InvocationTargetException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * 修改订单
+	 */
+	@Override
+	public void update(Order order) throws Exception {
+		/*
+		 * `state` int(11) DEFAULT NULL, `address` varchar(30) DEFAULT NULL,
+		 * `name` varchar(20) DEFAULT NULL,
+		 * 
+		 * `telephone` varchar(20) DEFAULT NULL, `uid` varchar(32) DEFAULT NULL,
+		 */
+		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
+		String sql = "update orders set state=?,address=?,name=?,telephone=? where oid=?";
+		qr.update(sql, order.getState(), order.getAddress(), order.getName(), order.getTelephone(), order.getOid());
+	}
 
 }
